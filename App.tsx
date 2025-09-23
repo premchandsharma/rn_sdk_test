@@ -24,13 +24,6 @@ type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-void AppStorys.initialize(
-  "5c45be58-85df-4651-9a66-6c10754e7f54",
-  "e3c8ee76-a90c-4673-a9e6-2e49f14425f2",
-  "nameisprem",
-  // attributes,
-);
-
 function Section({ children, title }: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -59,18 +52,38 @@ function Section({ children, title }: SectionProps): React.JSX.Element {
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [userId, setUserId] = React.useState<string>();
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
   useEffect(() => {
-    void AppStorys.trackScreen("Home Screen React", {
-      overlayPadding: {
-        pip: 40
-      }
-    });
+    setUserId('nameisprem');
   }, []);
+
+  useEffect(() => {
+    async function initializeAppStorys() {
+      if (!userId) {
+        return;
+      }
+      await AppStorys.initialize(
+        "5c45be58-85df-4651-9a66-6c10754e7f54",
+        "e3c8ee76-a90c-4673-a9e6-2e49f14425f2",
+        userId,
+        // attributes,
+      );
+      await AppStorys.trackScreen("Home Screen React", {
+        overlayPadding: {
+          pip: 40
+        }
+      });
+    }
+
+    if (userId) {
+      initializeAppStorys();
+    }
+  }, [userId]);
 
   return (
     <GestureHandlerRootView>

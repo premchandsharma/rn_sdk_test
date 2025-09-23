@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@appstorys/appstorys-react-native": "file:.yalc/@appstorys/appstorys-react-native",
+    "@appstorys/appstorys-react-native": "^1.1.6",
     "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-native-community/netinfo": "^11.2.1",
     "react": "18.2.0",
